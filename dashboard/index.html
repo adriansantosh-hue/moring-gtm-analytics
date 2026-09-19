@@ -437,55 +437,71 @@
     </section>
 
     <section class="panel" id="actions">
-      <div class="section-title"><h2>Next Actionable Insights</h2><span class="muted">Ranked by unblock value and impact</span></div>
-      <div class="grid-3">
+      <div class="section-title"><h2>Next Actionable Insights</h2><span class="muted">Based on outbound analytics and messaging change recommendations</span></div>
+      
+      <div class="insight-box critical" style="margin-bottom: 14px;">
+        <strong>PRIMARY ACTION: Launch Pain-Led Messaging Test</strong><br>
+        <span class="muted">Current analytics show 1,443 emails with 122 opens produced zero human replies. The problem is messaging, not targeting or deliverability.</span>
+      </div>
+
+      <div class="grid">
         <div class="stack">
-          <h3>Immediate (This Week)</h3>
+          <h3>Recommended Test (Priority #1)</h3>
           <div class="card">
-            <ol class="priorities">
-              <li><div><strong>Launch pain-led A/B copy test</strong><br><span class="muted">Test 50-100 prospects with targeting unchanged. Measure reply rate, positive replies, qualified workflow conversations.</span></div></li>
-              <li><div><strong>Fix tracking/verification</strong><br><span class="muted">Add GSC verification, GA4, GTM, HubSpot to site head. Verify Google can see the new site.</span></div></li>
-              <li><div><strong>Fix AWS Marketplace claim</strong><br><span class="muted">Remove "Listed" language from /aws page or complete actual AWS Marketplace listing.</span></div></li>
-            </ol>
+            <div class="status-row"><div class="label">Test scope</div><div>Run proposed pain-led copy against next 50-100 qualified prospects</div></div>
+            <div class="status-row"><div class="label">Keep unchanged</div><div>Target accounts, buyer personas, sending domains, sending volume, campaign timing</div></div>
+            <div class="status-row"><div class="label">Change only</div><div>Messaging: replace platform-led language with pain-led language</div></div>
+            <div class="status-row"><div class="label">Primary metrics</div><div>Human reply rate, positive reply rate, qualified conversations, pilots scoped, meetings created, opportunities created</div></div>
+            <div class="status-row"><div class="label">Success criteria</div><div>Open rate secondary; replies and qualified conversations determine success</div></div>
           </div>
         </div>
         <div class="stack">
-          <h3>Short-term (This Month)</h3>
+          <h3>Messaging Change Strategy</h3>
           <div class="card">
-            <ol class="priorities">
-              <li><div><strong>Rebalance persona coverage</strong><br><span class="muted">Add 2-3 control buyers per priority BFSI account. Increase risk/compliance targeting for governed-agent positioning.</span></div></li>
-              <li><div><strong>301 dead resource URLs</strong><br><span class="muted">Fix 5 remaining 404s (/services, /resources/*) to prevent soft-404 penalties in index.</span></div></li>
-              <li><div><strong>Build 4 workflow destination pages</strong><br><span class="muted">Create /demo/kyc, /demo/claims, /learn/sr-26-2, /learn/ai-agent-audit-trail for outbound destinations.</span></div></li>
-            </ol>
-          </div>
-        </div>
-        <div class="stack">
-          <h3>Medium-term (This Quarter)</h3>
-          <div class="card">
-            <ol class="priorities">
-              <li><div><strong>Scale mid-market coverage</strong><br><span class="muted">Regional banks $2-25B, top CUs ≥$1B, regional P&C carriers. Scale from 138 to 400-500 qualified accounts.</span></div></li>
-              <li><div><strong>Launch GEO content engine</strong><br><span class="muted">Convert every blog to LinkedIn Article. Start long-form video. Publish "State of Agent Governance" report.</span></div></li>
-              <li><div><strong>Regulatory wedge content</strong><br><span class="muted">SR 26-2 and NAIC authority plays. Compete with LucidTrust on regulatory keywords.</span></div></li>
-            </ol>
+            <div class="status-row"><div class="label">Previous approach</div><div>"Moring provides a governed AI control plane with identity, permissions, policy enforcement, and audit evidence."</div></div>
+            <div class="status-row"><div class="label">Proposed approach</div><div>"When clients run AI agents, they need to know what the AI accessed, what it did, and who approved it."</div></div>
+            <div class="status-row"><div class="label">New language</div><div>Logs, tickets, spreadsheets, actions, approvals, reports, human decisions</div></div>
+            <div class="status-row"><div class="label">Low-risk offer</div><div>One workflow, 15-minute conversation, free pilot, payment only if agreed value delivered</div></div>
           </div>
         </div>
       </div>
-      <div class="card" style="margin-top: 14px;">
-        <h3>Expected Impact</h3>
-        <div class="grid">
-          <div>
-            <div class="label">Outbound Conversion</div>
-            <p class="muted">Pain-led messaging expected to increase reply rate from 0% to 3-5% based on industry benchmarks for workflow-led outreach.</p>
-          </div>
-          <div>
-            <div class="label">Inbound Visibility</div>
-            <p class="muted">Restored analytics will enable measurement of traffic sources, conversion paths, and content performance.</p>
-          </div>
-          <div>
-            <div class="label">ICP Expansion</div>
-            <p class="muted">Mid-market sweep and persona rebalancing should increase qualified pipeline by 40-60%.</p>
+
+      <div class="grid-3" style="margin-top: 14px;">
+        <div class="stack">
+          <h3>Why This Change Works</h3>
+          <div class="card">
+            <ol class="priorities">
+              <li><div><strong>Recognizable problem</strong><br><span class="muted">"What did the AI do, and who approved it?" - prospect immediately understands</span></div></li>
+              <li><div><strong>Avoids unfamiliar terms</strong><br><span class="muted">No need to understand AICP, control planes, or AI-governance architecture</span></div></li>
+              <li><div><strong>Operational language</strong><br><span class="muted">Logs, tickets, spreadsheets - familiar to business and technical buyers</span></div></li>
+              <li><div><strong>Insight over logos</strong><br><span class="muted">Demonstrates credibility by accurately describing buyer's operational problem</span></div></li>
+            </ol>
           </div>
         </div>
+        <div class="stack">
+          <h3>Supporting Actions</h3>
+          <div class="card">
+            <ol class="priorities">
+              <li><div><strong>Fix tracking/verification</strong><br><span class="muted">Add GSC verification, GA4, GTM, HubSpot to site head for inbound measurement</span></div></li>
+              <li><div><strong>Fix AWS Marketplace claim</strong><br><span class="muted">Remove "Listed" language from /aws page or complete actual listing</span></div></li>
+              <li><div><strong>301 dead resource URLs</strong><br><span class="muted">Fix 5 remaining 404s to prevent soft-404 penalties in search index</span></div></li>
+            </ol>
+          </div>
+        </div>
+        <div class="stack">
+          <h3>Expected Impact</h3>
+          <div class="card">
+            <div class="status-row"><div class="label">Reply rate</div><div class="trend-up">From 0% to 3-5%</div></div>
+            <div class="status-row"><div class="label">Qualified conversations</div><div class="trend-up">From 0 to measurable pipeline</div></div>
+            <div class="status-row"><div class="label">Human control preserved</div><div class="success">Explicitly stated in all messaging</div></div>
+            <div class="status-row"><div class="label">Risk reduced</div><div class="success">Free pilot with payment only on agreed value delivery</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top: 14px;">
+        <h3>Test Conclusion</h3>
+        <p>Moring is successfully reaching the target audience, but the previous copy is not converting attention into conversations. The proposed change does not abandon the current targeting strategy - it simplifies how Moring communicates its value. The new message focuses on a problem prospects already recognize, a result they can understand, human control, one workflow, and a low-risk pilot. The objective is to convert existing attention into measurable replies, conversations, and opportunities.</p>
       </div>
     </section>
 
