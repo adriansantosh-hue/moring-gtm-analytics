@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Moring GTM Analytics Dashboard</title>
+  <meta name="description" content="Comprehensive Moring AI GTM analytics dashboard for ICP signals, personas, outbound performance, GSC/analytics, and actionable insights.">
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f8fa;
+      --surface: #ffffff;
+      --surface-2: #eef2f6;
+      --text: #16202a;
+      --muted: #5f6f80;
+      --line: #d9e0e8;
+      --primary: #12312f;
+      --primary-text: #ffffff;
+      --blue: #3d68cc;
+      --green: #18805f;
+      --orange: #b46318;
+      --red: #b63434;
+      --purple: #6b46c1;
+      --teal: #0d9488;
+      --shadow: 0 10px 30px rgba(22, 32, 42, 0.08);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font: 14px/1.5 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    .shell { max-width: 1400px; margin: 0 auto; padding: 24px; }
+    header {
+      display: grid;
+      gap: 10px;
+      padding: 18px 0 14px;
+      border-bottom: 1px solid var(--line);
+    }
+    .eyebrow { color: var(--muted); font-weight: 600; }
+    h1, h2, h3, p { margin: 0; }
+    h1 { font-size: clamp(28px, 5vw, 48px); line-height: 1.05; max-width: 940px; }
+    h2 { font-size: 20px; }
+    h3 { font-size: 15px; }
+    .lede { max-width: 860px; color: var(--muted); font-size: 16px; }
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 12px;
+      margin: 18px 0;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      padding: 16px;
+    }
+    .metric-label { color: var(--muted); font-weight: 600; }
+    .metric-value { font-size: 34px; line-height: 1.1; font-weight: 700; margin-top: 6px; }
+    .metric-note { color: var(--muted); margin-top: 6px; }
+    .tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin: 16px 0;
+    }
+    button {
+      appearance: none;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--text);
+      border-radius: 999px;
+      padding: 8px 12px;
+      font: inherit;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    button[aria-selected="true"] {
+      background: var(--primary);
+      color: var(--primary-text);
+      border-color: var(--primary);
+    }
+    .panel { display: none; }
+    .panel.active { display: block; }
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.18fr) minmax(300px, 0.82fr);
+      gap: 14px;
+      align-items: start;
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .stack { display: grid; gap: 12px; }
+    .section-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+    .badge-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: var(--surface-2);
+      color: var(--muted);
+      font-weight: 600;
+    }
+    .badge.success { background: #dcfce7; color: #166534; }
+    .badge.warning { background: #fef3c7; color: #92400e; }
+    .badge.danger { background: #fee2e2; color: #991b1b; }
+    .status-row {
+      display: grid;
+      grid-template-columns: 118px minmax(0, 1fr);
+      gap: 12px;
+      padding: 12px 0;
+      border-top: 1px solid var(--line);
+    }
+    .status-row:first-child { border-top: 0; padding-top: 0; }
+    .label { font-weight: 700; }
+    .muted { color: var(--muted); }
+    .bar-list { display: grid; gap: 10px; }
+    .bar-row {
+      display: grid;
+      grid-template-columns: minmax(150px, 0.55fr) minmax(130px, 1fr) 58px;
+      gap: 10px;
+      align-items: center;
+    }
+    .bar-track { height: 10px; background: var(--surface-2); overflow: hidden; border-radius: 999px; }
+    .bar { height: 100%; background: var(--blue); border-radius: inherit; }
+    .bar.green { background: var(--green); }
+    .bar.orange { background: var(--orange); }
+    .bar.red { background: var(--red); }
+    .bar.purple { background: var(--purple); }
+    .bar.teal { background: var(--teal); }
+    .num { text-align: right; font-variant-numeric: tabular-nums; }
+    ol.priorities {
+      counter-reset: item;
+      list-style: none;
+      display: grid;
+      gap: 12px;
+      padding: 0;
+      margin: 0;
+    }
+    ol.priorities li {
+      counter-increment: item;
+      display: grid;
+      grid-template-columns: 34px minmax(0, 1fr);
+      gap: 10px;
+    }
+    ol.priorities li::before {
+      content: counter(item);
+      display: grid;
+      place-items: center;
+      width: 30px;
+      height: 30px;
+      background: var(--primary);
+      color: var(--primary-text);
+      border-radius: 50%;
+      font-weight: 700;
+    }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { text-align: left; vertical-align: top; padding: 10px 8px; border-bottom: 1px solid var(--line); }
+    th { color: var(--muted); font-weight: 700; }
+    .table-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; box-shadow: var(--shadow); }
+    footer { color: var(--muted); padding: 22px 0 6px; }
+    .signal-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .signal-card {
+      background: var(--surface-2);
+      padding: 12px;
+      border-radius: 6px;
+    }
+    .trend-up { color: var(--green); }
+    .trend-down { color: var(--red); }
+    .insight-box {
+      background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+      border: 1px solid #86efac;
+      border-radius: 8px;
+      padding: 16px;
+    }
+    .insight-box.warning {
+      background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+      border-color: #fcd34d;
+    }
+    .insight-box.critical {
+      background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+      border-color: #fca5a5;
+    }
+    @media (max-width: 1024px) {
+      .metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .grid-3 { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 820px) {
+      .shell { padding: 18px; }
+      .metrics, .grid { grid-template-columns: 1fr; }
+      .bar-row { grid-template-columns: 1fr; gap: 6px; }
+      .num { text-align: left; }
+      .status-row { grid-template-columns: 1fr; gap: 4px; }
+      .signal-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header>
+      <div class="eyebrow">Moring AI · GTM Analytics Dashboard · snapshot through 2026-09-19</div>
+      <h1>ICP Signals, Personas, Outbound, GSC & Analytics Intelligence</h1>
+      <p class="lede">Comprehensive analytics dashboard showing Moring's current GTM performance, ICP coverage, signal effectiveness, persona targeting, outbound conversion, site analytics gaps, and prioritized next actions.</p>
+      <div class="badge-row" aria-label="Strategic rules">
+        <span class="badge">Workflow-led</span>
+        <span class="badge">BFSI-first</span>
+        <span class="badge">Human-in-control</span>
+        <span class="badge">Replies over opens</span>
+        <span class="badge">Signal-driven</span>
+      </div>
+    </header>
+
+    <section class="metrics" aria-label="Top metrics">
+      <div class="card"><div class="metric-label">Ready lead book</div><div class="metric-value">1,009</div><div class="metric-note">Master CSV rows marked READY</div></div>
+      <div class="card"><div class="metric-label">Email sent</div><div class="metric-value">1,443</div><div class="metric-note">122 unique opens · 0 human replies</div></div>
+      <div class="card"><div class="metric-label">LinkedIn accepted</div><div class="metric-value">69</div><div class="metric-note">632 requests · 10.9% acceptance</div></div>
+      <div class="card"><div class="metric-label">ICP coverage</div><div class="metric-value">8</div><div class="metric-note">Verticals with active targeting</div></div>
+      <div class="card"><div class="metric-label">Blocking gaps</div><div class="metric-value">3</div><div class="metric-note">Tracking, AWS claim, old 404s</div></div>
+      <div class="card"><div class="metric-label">Signal strength</div><div class="metric-value">Medium</div><div class="metric-note">Hiring/governance signals active</div></div>
+    </section>
+
+    <nav class="tabs" aria-label="Dashboard sections">
+      <button type="button" aria-selected="true" data-panel="now">Now</button>
+      <button type="button" aria-selected="false" data-panel="icp">ICP & Signals</button>
+      <button type="button" aria-selected="false" data-panel="personas">Personas</button>
+      <button type="button" aria-selected="false" data-panel="outbound">Outbound</button>
+      <button type="button" aria-selected="false" data-panel="site">GSC + Analytics</button>
+      <button type="button" aria-selected="false" data-panel="actions">Next Actions</button>
+    </nav>
+
+    <section class="panel active" id="now">
+      <div class="grid">
+        <div class="stack">
+          <div class="section-title"><h2>What Moring Is Doing Now</h2><span class="muted">Active motion</span></div>
+          <div class="card">
+            <div class="status-row"><div class="label">Outbound</div><div>Email and LinkedIn are live across BFSI, insurance, banking, credit union, healthcare, energy, telecom, SaaS/engineering, aerospace/MRO, mortgage, title insurance, and partner/SI routes. Infrastructure is healthy; conversion is the issue.</div></div>
+            <div class="status-row"><div class="label">Messaging</div><div>Current copy is moving from platform/control-plane language to pain-led language: "what did the AI access, what did it do, who approved it?" Recommended test: 50-100 qualified prospects with targeting unchanged.</div></div>
+            <div class="status-row"><div class="label">ICP</div><div>The master book is heavily weighted to enterprise BFSI, especially banking/KYC and insurance claims. Route coverage over-indexes workflow owners, with tech/control second and risk/compliance under-covered for a governed-agent category.</div></div>
+            <div class="status-row"><div class="label">Inbound</div><div>Technical SEO foundation largely shipped after the rebuild, but verification and analytics tracking were dropped. GEO/AEO authority is still the largest gap: Moring is not yet being cited by AI answer engines.</div></div>
+            <div class="status-row"><div class="label">Signals</div><div>Active signals include AI governance hiring, model-risk roles, modernization initiatives, and regulatory pressure events. Signal-to-workflow mapping is strong for BFSI verticals.</div></div>
+          </div>
+        </div>
+        <div class="card stack">
+          <h2>Executive Read</h2>
+          <ol class="priorities">
+            <li><div><strong>Keep the account book.</strong> Opens, warmup, bounce rate, and LinkedIn acceptance show the audience is reachable.</div></li>
+            <li><div><strong>Change the words.</strong> The leak is after attention: 1,443 emails and 122 unique opens produced zero human email replies.</div></li>
+            <li><div><strong>Restore measurement.</strong> Add GSC verification, GA4, GTM, and HubSpot before judging inbound performance.</div></li>
+            <li><div><strong>Build proof assets.</strong> Publish workflow pages for KYC, claims, prior auth, and release evidence.</div></li>
+            <li><div><strong>Strengthen signals.</strong> Expand signal diversity beyond hiring to include regulatory events, product launches, and analyst mentions.</div></li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" id="icp">
+      <div class="grid-3">
+        <div class="stack">
+          <div class="section-title"><h2>ICP Coverage</h2><span class="muted">Master lead book</span></div>
+          <div class="card bar-list">
+            <div class="bar-row"><div>Banking</div><div class="bar-track"><div class="bar" style="width:100%"></div></div><div class="num">317</div></div>
+            <div class="bar-row"><div>Insurance</div><div class="bar-track"><div class="bar" style="width:61%"></div></div><div class="num">194</div></div>
+            <div class="bar-row"><div>Partner/SI</div><div class="bar-track"><div class="bar green" style="width:53%"></div></div><div class="num">167</div></div>
+            <div class="bar-row"><div>Healthcare payor</div><div class="bar-track"><div class="bar" style="width:19%"></div></div><div class="num">60</div></div>
+            <div class="bar-row"><div>Asset services</div><div class="bar-track"><div class="bar" style="width:12%"></div></div><div class="num">37</div></div>
+            <div class="bar-row"><div>Energy</div><div class="bar-track"><div class="bar" style="width:11%"></div></div><div class="num">34</div></div>
+            <div class="bar-row"><div>Credit union</div><div class="bar-track"><div class="bar" style="width:9%"></div></div><div class="num">30</div></div>
+            <div class="bar-row"><div>Aerospace</div><div class="bar-track"><div class="bar" style="width:6%"></div></div><div class="num">20</div></div>
+          </div>
+          <div class="insight-box warning">
+            <strong>ICP Coverage Gap:</strong> Mid-market (regional banks $2-25B, top CUs) is most under-covered. Only ~3% of eligible 5,000 accounts are sourced.
+          </div>
+        </div>
+        <div class="stack">
+          <h2>Signal Effectiveness</h2>
+          <div class="card">
+            <div class="signal-grid">
+              <div class="signal-card">
+                <div class="label">AI Governance Hiring</div>
+                <div class="metric-value success">High</div>
+                <div class="metric-note">CAIO, Model Risk, Responsible AI roles signal active governance mandates</div>
+              </div>
+              <div class="signal-card">
+                <div class="label">Modernization Initiatives</div>
+                <div class="metric-value">Medium</div>
+                <div class="metric-note">Digital transformation, cloud migration, AI platform projects</div>
+              </div>
+              <div class="signal-card">
+                <div class="label">Regulatory Events</div>
+                <div class="metric-value">Low</div>
+                <div class="metric-note">SR 26-2, NAIC pressure - underutilized signal source</div>
+              </div>
+              <div class="signal-card">
+                <div class="label">New Leadership</div>
+                <div class="metric-value">Medium</div>
+                <div class="metric-note">First 90-day change signals workflow review opportunities</div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Signal-to-Workflow Mapping</h3>
+            <p><strong>Banking:</strong> commercial onboarding and KYC evidence, anchored on hiring, governance, model-risk, and operational burden signals.</p>
+            <p><strong>Insurance:</strong> claims evidence and exception resolution, tied to claims cycle time, underwriting evidence, SIU, and NAIC pressure.</p>
+            <p><strong>Partner/SI:</strong> governed AI delivery for client agents, with the lowest-friction question around audit reports, approvals, and one free workflow pilot.</p>
+          </div>
+        </div>
+        <div class="stack">
+          <h2>Market Coverage Analysis</h2>
+          <div class="card">
+            <div class="status-row"><div class="label">TAM Reach</div><div>~5,000 eligible accounts in target regions (US, CA, UAE, AU, Europe) with governed-agentic-AI need</div></div>
+            <div class="status-row"><div class="label">Current Coverage</div><div>138 accounts sourced (~3% of TAM) - coverage gap is significant, not market thinness</div></div>
+            <div class="status-row"><div class="label">SAM Qualification</div><div>800-1,200 accounts executing named governed-workflow hypothesis this year</div></div>
+            <div class="status-row"><div class="label">Revenue Target</div><div>$5-8M ARR Y1 → $10-15M Y2-3 from 400-500 qualified accounts + 10-15% pipeline-to-close</div></div>
+          </div>
+          <div class="insight-box critical">
+            <strong>Urgent:</strong> Scale from 138 to 400-500 qualified accounts requires mid-market-first sweep (regional banks $2-25B, top CUs ≥$1B, regional P&C carriers).
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" id="personas">
+      <div class="grid">
+        <div class="stack">
+          <div class="section-title"><h2>Persona Mix</h2><span class="muted">Current targeting distribution</span></div>
+          <div class="card bar-list">
+            <div class="bar-row"><div>ICP 1 · workflow/ops</div><div class="bar-track"><div class="bar green" style="width:100%"></div></div><div class="num">465</div></div>
+            <div class="bar-row"><div>ICP 3 · tech/control</div><div class="bar-track"><div class="bar orange" style="width:42%"></div></div><div class="num">194</div></div>
+            <div class="bar-row"><div>Partner/SI</div><div class="bar-track"><div class="bar" style="width:36%"></div></div><div class="num">167</div></div>
+            <div class="bar-row"><div>ICP 2 · risk/compliance</div><div class="bar-track"><div class="bar orange" style="width:27%"></div></div><div class="num">126</div></div>
+            <div class="bar-row"><div>Exec sponsor</div><div class="bar-track"><div class="bar" style="width:10%"></div></div><div class="num">45</div></div>
+            <div class="bar-row"><div>ICP 4 · engineering</div><div class="bar-track"><div class="bar" style="width:3%"></div></div><div class="num">12</div></div>
+          </div>
+          <div class="insight-box warning">
+            <strong>Persona Imbalance:</strong> Workflow owners dominate (46%). Risk/compliance is under-covered (12%) for a governed-agent category. Need 2-3 control buyers per priority BFSI account.
+          </div>
+        </div>
+        <div class="stack">
+          <h2>Persona-Specific Insights</h2>
+          <div class="card">
+            <div class="status-row"><div class="label">ICP 1: Workflow Owner</div><div><strong>Target:</strong> Operations, claims, KYC, lending, service leaders<br><strong>Pain:</strong> Backlog, cycle time, analyst effort, SLA failures<br><strong>Message:</strong> Agent gathers evidence, prepares recommendations, human decides</div></div>
+            <div class="status-row"><div class="label">ICP 2: Risk/Compliance</div><div><strong>Target:</strong> CRO, CCO, MLRO, Model Risk, Responsible AI<br><strong>Pain:</strong> AI use cases stuck at review, unexplainable actions, exam anxiety<br><strong>Message:</strong> Governed workflow with controlled access, boundaries, evidence trail</div></div>
+            <div class="status-row"><div class="label">ICP 3: Tech/Control</div><div><strong>Target:</strong> CIO, CTO, CDAO, Head of AI, EA, AI Platform<br><strong>Pain:</strong> Fragmented pilots, duplicate infra, prototypes dying before prod<br><strong>Message:</strong> One high-value workflow first → AICP as shared control layer</div></div>
+            <div class="status-row"><div class="label">ICP 4: Engineering</div><div><strong>Target:</strong> VP Eng, Platform Eng, DevSecOps, AI Eng<br><strong>Pain:</strong> Ungoverned Claude Code/Cursor use, AI code failing review<br><strong>Message:</strong> AI-DLC: governed delivery, per-PR attribution, failure drill</div></div>
+          </div>
+          <div class="card">
+            <h3>Enterprise vs Mid-Market Routing</h3>
+            <p><strong>Enterprise:</strong> Multi-thread business owner, control buyer, technical owner, executive sponsor. Proof needed: governance, architecture fit, data boundaries.</p>
+            <p><strong>Mid-Market:</strong> Workflow owner plus technical or executive approver. Proof needed: fast operational value, integration practicality, implementation effort.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" id="outbound">
+      <div class="grid">
+        <div class="stack">
+          <div class="section-title"><h2>Outbound Funnel</h2><span class="muted">Replies are the success metric</span></div>
+          <div class="card bar-list">
+            <div class="bar-row"><div>Email contacts reached</div><div class="bar-track"><div class="bar" style="width:100%"></div></div><div class="num">1,285</div></div>
+            <div class="bar-row"><div>Unique opens</div><div class="bar-track"><div class="bar orange" style="width:9.5%"></div></div><div class="num">122</div></div>
+            <div class="bar-row"><div>Human email replies</div><div class="bar-track"><div class="bar red" style="width:0%"></div></div><div class="num">0</div></div>
+            <div class="bar-row"><div>LinkedIn requests</div><div class="bar-track"><div class="bar green" style="width:49%"></div></div><div class="num">632</div></div>
+            <div class="bar-row"><div>Connections accepted</div><div class="bar-track"><div class="bar green" style="width:5.4%"></div></div><div class="num">69</div></div>
+            <div class="bar-row"><div>Genuine ICP responses</div><div class="bar-track"><div class="bar red" style="width:0.08%"></div></div><div class="num">1</div></div>
+          </div>
+          <div class="insight-box critical">
+            <strong>Critical Conversion Gap:</strong> 1,443 emails with 122 opens produced zero human replies. Quantiphi CEO opened 12 times without replying - message problem, not targeting.
+          </div>
+        </div>
+        <div class="card stack">
+          <h2>Outbound Diagnosis</h2>
+          <div class="status-row"><div class="label">Deliverability</div><div>✅ 19 senders warm, 100% inbox placement, 1.8% bounce rate - infrastructure is healthy</div></div>
+          <div class="status-row"><div class="label">Targeting</div><div>✅ Repeated opens and LinkedIn acceptance (10.9%) indicate buyer attention and ICP fit</div></div>
+          <div class="status-row"><div class="label">Messaging</div><div>❌ Platform-led language (AICP, control plane, governance architecture) asks buyers to understand category before feeling pain</div></div>
+          <div class="status-row"><div class="label">Test Plan</div><div>Pain-led copy test: 50-100 qualified prospects, targeting unchanged, measure reply rate and qualified conversations</div></div>
+          <div class="card">
+            <h3>Messaging Change Example</h3>
+            <p><strong>Previous:</strong> "Moring provides a governed AI control plane with identity, permissions, policy enforcement, and audit evidence."</p>
+            <p><strong>Proposed:</strong> "When clients run AI agents, they need to know what the AI accessed, what it did, and who approved it. Most teams still piece this together from logs, tickets, and spreadsheets."</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" id="site">
+      <div class="grid">
+        <div class="stack">
+          <div class="section-title"><h2>GSC, Analytics, and Inbound State</h2><span class="muted">Site crawl verified 2026-09-09</span></div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Area</th><th>Status</th><th>Impact</th><th>Decision</th></tr></thead>
+              <tbody>
+                <tr><td>Canonicals, meta, schema, sitemap</td><td><span class="badge success">Shipped</span></td><td>SEO foundation in place</td><td>Maintain and submit key URLs in GSC</td></tr>
+                <tr><td>GSC verification</td><td><span class="badge danger">Missing</span></td><td>Google cannot verify new site</td><td>Restore verification meta tag sitewide</td></tr>
+                <tr><td>GA4/GTM/HubSpot</td><td><span class="badge danger">Missing</span></td><td>Zero analytics collecting</td><td>Re-add tracking before any inbound readout</td></tr>
+                <tr><td>/aws Marketplace claim</td><td><span class="badge warning">False claim</span></td><td>Credibility risk</td><td>Remove "Listed" language or complete listing</td></tr>
+                <tr><td>Old resource URLs</td><td><span class="badge warning">5 still 404</span></td><td>Soft-404 risk in index</td><td>301 or restore (good SEO material)</td></tr>
+                <tr><td>GEO/AEO citations</td><td><span class="badge danger">D-grade gap</span></td><td>Not cited by AI engines</td><td>Publish answer pages, original data, LinkedIn Articles, YouTube</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card stack">
+          <h2>Inbound Priority</h2>
+          <ol class="priorities">
+            <li><div><strong>Measurement first:</strong> GSC verification, GA4, GTM, HubSpot - currently flying blind on traffic</div></li>
+            <li><div><strong>Risk cleanup:</strong> AWS Marketplace wording and 5 dead URLs - credibility and SEO health</div></li>
+            <li><div><strong>Destination pages:</strong> /demo/kyc, /demo/claims, /learn/sr-26-2, /learn/ai-agent-audit-trail - funnel-bottom build-out</div></li>
+            <li><div><strong>GEO engine:</strong> every blog becomes LinkedIn Article; start long-form video and original "State of Agent Governance" report</div></li>
+            <li><div><strong>Competitor defense:</strong> Target LucidTrust's SR 26-2 keyword wedge; build regulatory authority content</div></li>
+          </ol>
+          <div class="insight-box critical">
+            <strong>Blocking Issue:</strong> GSC verification and analytics tracking dropped in rebuild. Cannot measure inbound performance or optimize without data.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" id="actions">
+      <div class="section-title"><h2>Next Actionable Insights</h2><span class="muted">Based on outbound analytics and messaging change recommendations</span></div>
+      
+      <div class="insight-box critical" style="margin-bottom: 14px;">
+        <strong>PRIMARY ACTION: Launch Pain-Led Messaging Test</strong><br>
+        <span class="muted">Current analytics show 1,443 emails with 122 opens produced zero human replies. The problem is messaging, not targeting or deliverability.</span>
+      </div>
+
+      <div class="grid">
+        <div class="stack">
+          <h3>Recommended Test (Priority #1)</h3>
+          <div class="card">
+            <div class="status-row"><div class="label">Test scope</div><div>Run proposed pain-led copy against next 50-100 qualified prospects</div></div>
+            <div class="status-row"><div class="label">Keep unchanged</div><div>Target accounts, buyer personas, sending domains, sending volume, campaign timing</div></div>
+            <div class="status-row"><div class="label">Change only</div><div>Messaging: replace platform-led language with pain-led language</div></div>
+            <div class="status-row"><div class="label">Primary metrics</div><div>Human reply rate, positive reply rate, qualified conversations, pilots scoped, meetings created, opportunities created</div></div>
+            <div class="status-row"><div class="label">Success criteria</div><div>Open rate secondary; replies and qualified conversations determine success</div></div>
+          </div>
+        </div>
+        <div class="stack">
+          <h3>Messaging Change Strategy</h3>
+          <div class="card">
+            <div class="status-row"><div class="label">Previous approach</div><div>"Moring provides a governed AI control plane with identity, permissions, policy enforcement, and audit evidence."</div></div>
+            <div class="status-row"><div class="label">Proposed approach</div><div>"When clients run AI agents, they need to know what the AI accessed, what it did, and who approved it."</div></div>
+            <div class="status-row"><div class="label">New language</div><div>Logs, tickets, spreadsheets, actions, approvals, reports, human decisions</div></div>
+            <div class="status-row"><div class="label">Low-risk offer</div><div>One workflow, 15-minute conversation, free pilot, payment only if agreed value delivered</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-3" style="margin-top: 14px;">
+        <div class="stack">
+          <h3>Why This Change Works</h3>
+          <div class="card">
+            <ol class="priorities">
+              <li><div><strong>Recognizable problem</strong><br><span class="muted">"What did the AI do, and who approved it?" - prospect immediately understands</span></div></li>
+              <li><div><strong>Avoids unfamiliar terms</strong><br><span class="muted">No need to understand AICP, control planes, or AI-governance architecture</span></div></li>
+              <li><div><strong>Operational language</strong><br><span class="muted">Logs, tickets, spreadsheets - familiar to business and technical buyers</span></div></li>
+              <li><div><strong>Insight over logos</strong><br><span class="muted">Demonstrates credibility by accurately describing buyer's operational problem</span></div></li>
+            </ol>
+          </div>
+        </div>
+        <div class="stack">
+          <h3>Supporting Actions</h3>
+          <div class="card">
+            <ol class="priorities">
+              <li><div><strong>Fix tracking/verification</strong><br><span class="muted">Add GSC verification, GA4, GTM, HubSpot to site head for inbound measurement</span></div></li>
+              <li><div><strong>Fix AWS Marketplace claim</strong><br><span class="muted">Remove "Listed" language from /aws page or complete actual listing</span></div></li>
+              <li><div><strong>301 dead resource URLs</strong><br><span class="muted">Fix 5 remaining 404s to prevent soft-404 penalties in search index</span></div></li>
+            </ol>
+          </div>
+        </div>
+        <div class="stack">
+          <h3>Expected Impact</h3>
+          <div class="card">
+            <div class="status-row"><div class="label">Reply rate</div><div class="trend-up">From 0% to 3-5%</div></div>
+            <div class="status-row"><div class="label">Qualified conversations</div><div class="trend-up">From 0 to measurable pipeline</div></div>
+            <div class="status-row"><div class="label">Human control preserved</div><div class="success">Explicitly stated in all messaging</div></div>
+            <div class="status-row"><div class="label">Risk reduced</div><div class="success">Free pilot with payment only on agreed value delivery</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top: 14px;">
+        <h3>Test Conclusion</h3>
+        <p>Moring is successfully reaching the target audience, but the previous copy is not converting attention into conversations. The proposed change does not abandon the current targeting strategy - it simplifies how Moring communicates its value. The new message focuses on a problem prospects already recognize, a result they can understand, human control, one workflow, and a low-risk pilot. The objective is to convert existing attention into measurable replies, conversations, and opportunities.</p>
+      </div>
+    </section>
+
+    <footer>Source: Moring workspace docs, outbound analytics note dated 2026-09-19, site crawl notes dated 2026-09-09, GTM strategy docs, and lead-book summaries from the workspace CSVs. Dashboard generated 2026-09-19.</footer>
+  </main>
+
+  <script>
+    const buttons = Array.from(document.querySelectorAll("[data-panel]"));
+    const panels = Array.from(document.querySelectorAll(".panel"));
+    function showPanel(id) {
+      buttons.forEach((button) => button.setAttribute("aria-selected", String(button.dataset.panel === id)));
+      panels.forEach((panel) => panel.classList.toggle("active", panel.id === id));
+      history.replaceState(null, "", "#" + id);
+    }
+    buttons.forEach((button) => button.addEventListener("click", () => showPanel(button.dataset.panel)));
+    const initial = location.hash.replace("#", "");
+    if (initial && document.getElementById(initial)) showPanel(initial);
+  </script>
+</body>
+</html>
