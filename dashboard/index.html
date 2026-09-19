@@ -405,10 +405,13 @@
     <section class="panel" id="site">
       <div class="grid">
         <div class="stack">
-          <div class="section-title"><h2>GSC, Analytics, and Inbound State</h2><span class="muted">Site crawl verified 2026-09-09</span></div>
+          <div class="section-title"><h2>GSC, Analytics, and Inbound State</h2><span class="muted">Source: Site crawl verified 2026-09-09 (10 days ago)</span></div>
+          <div class="insight-box warning" style="margin-bottom: 12px;">
+            <strong>Note:</strong> The site analytics data below is from a verification performed on 2026-09-09. Current status may have changed. Verify directly before taking action.
+          </div>
           <div class="table-wrap">
             <table>
-              <thead><tr><th>Area</th><th>Status</th><th>Impact</th><th>Decision</th></tr></thead>
+              <thead><tr><th>Area</th><th>Status (as of 9/9)</th><th>Impact</th><th>Decision</th></tr></thead>
               <tbody>
                 <tr><td>Canonicals, meta, schema, sitemap</td><td><span class="badge success">Shipped</span></td><td>SEO foundation in place</td><td>Maintain and submit key URLs in GSC</td></tr>
                 <tr><td>GSC verification</td><td><span class="badge danger">Missing</span></td><td>Google cannot verify new site</td><td>Restore verification meta tag sitewide</td></tr>
@@ -423,14 +426,14 @@
         <div class="card stack">
           <h2>Inbound Priority</h2>
           <ol class="priorities">
-            <li><div><strong>Measurement first:</strong> GSC verification, GA4, GTM, HubSpot - currently flying blind on traffic</div></li>
-            <li><div><strong>Risk cleanup:</strong> AWS Marketplace wording and 5 dead URLs - credibility and SEO health</div></li>
+            <li><div><strong>Verify current state:</strong> Re-check GSC verification, GA4/GTM/HubSpot tracking status - data is 10 days old</div></li>
+            <li><div><strong>Measurement first:</strong> If still missing, restore GSC verification, GA4, GTM, HubSpot</div></li>
+            <li><div><strong>Risk cleanup:</strong> Verify AWS Marketplace wording and check if 5 dead URLs still exist</div></li>
             <li><div><strong>Destination pages:</strong> /demo/kyc, /demo/claims, /learn/sr-26-2, /learn/ai-agent-audit-trail - funnel-bottom build-out</div></li>
             <li><div><strong>GEO engine:</strong> every blog becomes LinkedIn Article; start long-form video and original "State of Agent Governance" report</div></li>
-            <li><div><strong>Competitor defense:</strong> Target LucidTrust's SR 26-2 keyword wedge; build regulatory authority content</div></li>
           </ol>
-          <div class="insight-box critical">
-            <strong>Blocking Issue:</strong> GSC verification and analytics tracking dropped in rebuild. Cannot measure inbound performance or optimize without data.
+          <div class="insight-box warning">
+            <strong>Verification Needed:</strong> Site analytics data is from 2026-09-09. Current status may have changed. Verify each item before taking action.
           </div>
         </div>
       </div>
