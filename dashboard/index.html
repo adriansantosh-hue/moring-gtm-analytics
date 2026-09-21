@@ -411,12 +411,13 @@
           </div>
           <div class="table-wrap">
             <table>
-              <thead><tr><th>Area</th><th>Status (current)</th><th>Codes Available</th><th>Decision</th></tr></thead>
+              <thead><tr><th>Area</th><th>Status (verified 9/20)</th><th>Code Found</th><th>Decision</th></tr></thead>
               <tbody>
                 <tr><td>Canonicals, meta, schema, sitemap</td><td><span class="badge success">Verified</span></td><td>-</td><td>Maintain and submit key URLs in GSC</td></tr>
-                <tr><td>GSC verification</td><td><span class="badge warning">Unknown</span></td><td><code>MJRG5O4exnFZE-EVLSuRx1u1TQ8Xw6PvpcoIkehtisc</code></td><td>Verify if meta tag is on live site; add if missing</td></tr>
-                <tr><td>GA4 tracking</td><td><span class="badge warning">Unknown</span></td><td><code>G-DF4X8424BJ</code></td><td>Verify if gtag.js is on live site; add if missing</td></tr>
-                <tr><td>GTM container</td><td><span class="badge warning">Unknown</span></td><td><code>GTM-M92CJFC6</code></td><td>Verify if GTM script is on live site; add if missing</td></tr>
+                <tr><td>GSC verification</td><td><span class="badge success">Present</span></td><td><code>MJRG5O4exnFZE-EVLSuRx1u1TQ8Xw6PvpcoIkehtisc</code></td><td>Verification code live on site - GSC should be verifiable</td></tr>
+                <tr><td>GA4 tracking</td><td><span class="badge success">Present</span></td><td><code>G-DF4X8424BJ</code></td><td>GA4 tracking live on site - analytics collecting</td></tr>
+                <tr><td>HubSpot tracking</td><td><span class="badge success">Present</span></td><td><code>245315535</code></td><td>HubSpot scripts live on site - marketing analytics active</td></tr>
+                <tr><td>GTM container</td><td><span class="badge danger">Missing</span></td><td><code>GTM-M92CJFC6</code> (not found)</td><td>Add GTM script if GTM-M92CJFC6 is still needed</td></tr>
                 <tr><td>/aws Marketplace claim</td><td><span class="badge success">Resolved</span></td><td>-</td><td>Current content appears accurate</td></tr>
                 <tr><td>Old resource URLs</td><td><span class="badge success">Fixed</span></td><td>-</td><td>Redirects working correctly</td></tr>
                 <tr><td>GEO/AEO citations</td><td><span class="badge warning">Unknown</span></td><td>-</td><td>Check AI answer engines for Moring citations</td></tr>
@@ -429,16 +430,15 @@
           <div class="status-row"><div class="label">Redirects fixed</div><div>All previously 404 URLs now redirect correctly: /services/, /resources/building-production-ready-agentic-ai/, /resources/composable-ai-platform-approach/, /resources/forward-deployed-engineering-model/, /resources/document-processing-at-scale/</div></div>
           <div class="status-row"><div class="label">AWS page</div><div>/aws page content is accurate - focuses on "Bedrock-native" and "Your AWS account" without false "Marketplace Listed" claims</div></div>
           <div class="status-row"><div class="label">Sitemap</div><div>Sitemap-index.xml and sitemap-0.xml are accessible with 43 URLs including all blog posts</div></div>
-          <div class="status-row"><div class="label">Analytics tracking</div><div>Codes available in workspace: GSC (MJRG5O4exnFZE-EVLSuRx1u1TQ8Xw6PvpcoIkehtisc), GA4 (G-DF4X8424BJ), GTM (GTM-M92CJFC6). Need to verify if implemented on live site.</div></div>
+          <div class="status-row"><div class="label">Analytics tracking</div><div>GSC verification code FOUND on live site. GA4 tracking FOUND (G-DF4X8424BJ). HubSpot tracking FOUND (245315535). Only GTM container (GTM-M92CJFC6) is missing.</div></div>
           <h3>Updated Priorities</h3>
           <ol class="priorities">
-            <li><div><strong>Verify analytics codes on live site:</strong> Check if GSC meta tag, GA4 gtag.js, and GTM script are present on moring.ai HTML head</div></li>
-            <li><div><strong>Add missing tracking codes:</strong> If any codes are missing, add them to site head using available workspace codes</div></li>
+            <li><div><strong>Add GTM container:</strong> Add GTM-M92CJFC6 script to site head if still needed (only missing tracking code)</div></li>
             <li><div><strong>Destination pages:</strong> /demo/kyc, /demo/claims, /learn/sr-26-2, /learn/ai-agent-audit-trail - funnel-bottom build-out</div></li>
             <li><div><strong>GEO engine:</strong> every blog becomes LinkedIn Article; start long-form video and original "State of Agent Governance" report</div></li>
           </ol>
           <div class="insight-box success">
-            <strong>Progress Made:</strong> Site crawl shows significant improvement since 2026-09-09. Major SEO issues (redirects, false claims) resolved. Analytics codes available in workspace - just need verification/implementation on live site.
+            <strong>Excellent Progress:</strong> Site crawl shows major improvements since 2026-09-09. All major tracking codes (GSC, GA4, HubSpot) are now live. Only GTM container missing. Redirects and AWS content issues resolved.
           </div>
         </div>
       </div>
