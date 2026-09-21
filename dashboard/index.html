@@ -234,7 +234,7 @@
       <div class="card"><div class="metric-label">Email sent</div><div class="metric-value">1,443</div><div class="metric-note">122 unique opens · 0 human replies</div></div>
       <div class="card"><div class="metric-label">LinkedIn accepted</div><div class="metric-value">69</div><div class="metric-note">632 requests · 10.9% acceptance</div></div>
       <div class="card"><div class="metric-label">ICP coverage</div><div class="metric-value">8</div><div class="metric-note">Verticals with active targeting</div></div>
-      <div class="card"><div class="metric-label">Blocking gaps</div><div class="metric-value">3</div><div class="metric-note">Tracking, AWS claim, old 404s</div></div>
+      <div class="card"><div class="metric-label">Site tracking</div><div class="metric-value">5/6</div><div class="metric-note">GSC, GA4, HubSpot, Meta, Vercel live · GTM missing</div></div>
       <div class="card"><div class="metric-label">Signal strength</div><div class="metric-value">Medium</div><div class="metric-note">Hiring/governance signals active</div></div>
     </section>
 
@@ -417,6 +417,9 @@
                 <tr><td>GSC verification</td><td><span class="badge success">Present</span></td><td><code>MJRG5O4exnFZE-EVLSuRx1u1TQ8Xw6PvpcoIkehtisc</code></td><td>Verification code live on site - GSC should be verifiable</td></tr>
                 <tr><td>GA4 tracking</td><td><span class="badge success">Present</span></td><td><code>G-DF4X8424BJ</code></td><td>GA4 tracking live on site - analytics collecting</td></tr>
                 <tr><td>HubSpot tracking</td><td><span class="badge success">Present</span></td><td><code>245315535</code></td><td>HubSpot scripts live on site - marketing analytics active</td></tr>
+                <tr><td>Meta Pixel tracking</td><td><span class="badge success">Present</span></td><td><code>2205359107080463, 972266975893102</code></td><td>Meta Pixel IDs live on site - social analytics active</td></tr>
+                <tr><td>Vercel Analytics</td><td><span class="badge success">Present</span></td><td><code>/_vercel/insights/script.js</code></td><td>Vercel Web Analytics live on site - hosting analytics active</td></tr>
+                <tr><td>Consent management</td><td><span class="badge success">Present</span></td><td><code>moring.consent.measurement.v2</code></td><td>Cookie consent system with localStorage - privacy compliant</td></tr>
                 <tr><td>GTM container</td><td><span class="badge danger">Missing</span></td><td><code>GTM-M92CJFC6</code> (not found)</td><td>Add GTM script if GTM-M92CJFC6 is still needed</td></tr>
                 <tr><td>/aws Marketplace claim</td><td><span class="badge success">Resolved</span></td><td>-</td><td>Current content appears accurate</td></tr>
                 <tr><td>Old resource URLs</td><td><span class="badge success">Fixed</span></td><td>-</td><td>Redirects working correctly</td></tr>
@@ -430,7 +433,7 @@
           <div class="status-row"><div class="label">Redirects fixed</div><div>All previously 404 URLs now redirect correctly: /services/, /resources/building-production-ready-agentic-ai/, /resources/composable-ai-platform-approach/, /resources/forward-deployed-engineering-model/, /resources/document-processing-at-scale/</div></div>
           <div class="status-row"><div class="label">AWS page</div><div>/aws page content is accurate - focuses on "Bedrock-native" and "Your AWS account" without false "Marketplace Listed" claims</div></div>
           <div class="status-row"><div class="label">Sitemap</div><div>Sitemap-index.xml and sitemap-0.xml are accessible with 43 URLs including all blog posts</div></div>
-          <div class="status-row"><div class="label">Analytics tracking</div><div>GSC verification code FOUND on live site. GA4 tracking FOUND (G-DF4X8424BJ). HubSpot tracking FOUND (245315535). Only GTM container (GTM-M92CJFC6) is missing.</div></div>
+          <div class="status-row"><div class="label">Analytics tracking</div><div>Comprehensive tracking stack live: GSC verification, GA4 (G-DF4X8424BJ), HubSpot (245315535), Meta Pixel (2 IDs), Vercel Analytics, consent management system. Only GTM container (GTM-M92CJFC6) missing.</div></div>
           <h3>Updated Priorities</h3>
           <ol class="priorities">
             <li><div><strong>Add GTM container:</strong> Add GTM-M92CJFC6 script to site head if still needed (only missing tracking code)</div></li>
@@ -438,7 +441,7 @@
             <li><div><strong>GEO engine:</strong> every blog becomes LinkedIn Article; start long-form video and original "State of Agent Governance" report</div></li>
           </ol>
           <div class="insight-box success">
-            <strong>Excellent Progress:</strong> Site crawl shows major improvements since 2026-09-09. All major tracking codes (GSC, GA4, HubSpot) are now live. Only GTM container missing. Redirects and AWS content issues resolved.
+            <strong>Excellent Progress:</strong> Site crawl shows comprehensive tracking stack since 2026-09-09. GSC, GA4, HubSpot, Meta Pixel, Vercel Analytics all live with consent management. Only GTM container missing. Redirects and AWS content issues resolved.
           </div>
         </div>
       </div>
