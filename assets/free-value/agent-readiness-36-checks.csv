@@ -1,0 +1,37 @@
+id,domain,check,how_to_test,rating_options,evidence_to_keep
+ID-1,Identity,Each agent has its own workload identity,List identities in the IdP/secret store; none shared between agents,cleared | conditional | not-ready,Identity inventory export
+ID-2,Identity,No shared or human service accounts used by agents,Search tool-call logs for human or shared principals,cleared | conditional | not-ready,Log query + result
+ID-3,Identity,Credentials are short-lived,Check token lifetime and rotation config,cleared | conditional | not-ready,Token policy screenshot/config
+ID-4,Identity,The human the agent acts for is recorded on each action,Pick 5 actions; each names agent and on-behalf-of user,cleared | conditional | not-ready,5 sample records
+ID-5,Identity,Tokens are scoped per tool and bound to one audience (no passthrough of the caller's token),Decode a token; check audience and scopes,cleared | conditional | not-ready,Decoded token (redacted)
+ID-6,Identity,Human approvers are identified and authorized for what they approve,Check approver role mapping,cleared | conditional | not-ready,Approver role table
+PL-1,Policy,Policy is code in version control,Find the repo and last 5 changes,cleared | conditional | not-ready,Repo link + history
+PL-2,Policy,Default is deny,Call a tool with no matching rule,cleared | conditional | not-ready,Test run output
+PL-3,Policy,Every tool call is evaluated before it executes,Trace one call end to end; policy decision precedes execution,cleared | conditional | not-ready,Trace with timestamps
+PL-4,Policy,Policy has automated tests in CI,Run the test suite; check it gates merges,cleared | conditional | not-ready,CI run
+PL-5,Policy,New policy runs in shadow mode before it enforces,Check last policy rollout for a shadow period,cleared | conditional | not-ready,Shadow-mode log
+PL-6,Policy,Policy changes need review and are logged,Check approval + audit entry for last change,cleared | conditional | not-ready,Change record
+EG-1,Egress,Outbound destinations are allowlisted,Attempt a call to a non-listed host,cleared | conditional | not-ready,Blocked-call log
+EG-2,Egress,Unknown hosts are blocked and alerted,Check alert fired for the attempt,cleared | conditional | not-ready,Alert record
+EG-3,Egress,Data classes (personal data) are labeled and checked on the way out,Send a labeled record to a non-approved tool,cleared | conditional | not-ready,Block or escalation record
+EG-4,Egress,Code execution runs in a sandbox with no ambient credentials,Inspect sandbox config,cleared | conditional | not-ready,Sandbox config
+EG-5,Egress,Secrets never appear in prompts or context,Scan prompts and traces for secret patterns,cleared | conditional | not-ready,Scan report
+EG-6,Egress,Outputs are checked before they reach external systems,Check output filter or review step,cleared | conditional | not-ready,Config + sample
+TR-1,Trace,One correlated record per action (prompt + principal + tool call + result),Pick an action; fetch all four with one trace ID,cleared | conditional | not-ready,Trace export
+TR-2,Trace,Records are append-only and tamper-evident,Check signing or hash chaining,cleared | conditional | not-ready,Verification output
+TR-3,Trace,Denials are logged as fully as successes,Find a denied action in the log,cleared | conditional | not-ready,Denied record
+TR-4,Trace,Approvals and approver identity are in the record,Pick an approved action,cleared | conditional | not-ready,Approved record
+TR-5,Trace,Retention is set to the longest rule that applies to you,Compare retention setting with your rule list,cleared | conditional | not-ready,Retention setting + rule list
+TR-6,Trace,One query can replay an incident,Time a replay of last week's decision,cleared | conditional | not-ready,Query + minutes taken
+CP-1,Caps,Per-agent spend budget with alert,Check budget and alert threshold,cleared | conditional | not-ready,Budget config
+CP-2,Caps,Per-tool rate limits,Exceed the limit in test,cleared | conditional | not-ready,Throttle log
+CP-3,Caps,Maximum steps or loop depth per task,Trigger a loop in test,cleared | conditional | not-ready,Stop record
+CP-4,Caps,Blast-radius limit per action (records or amount),Try an action above the limit,cleared | conditional | not-ready,Block or escalation record
+CP-5,Caps,Concurrency limit per agent,Run parallel calls above the cap,cleared | conditional | not-ready,Throttle log
+CP-6,Caps,Cost is attributed to team/agent/task,Pull a cost report by agent,cleared | conditional | not-ready,Cost report
+KS-1,Kill switch,Any single agent can be disabled in minutes,Time a disable in test,cleared | conditional | not-ready,Timed drill record
+KS-2,Kill switch,All agents can be disabled at once,Run a global stop in test,cleared | conditional | not-ready,Drill record
+KS-3,Kill switch,Credentials can be revoked fast,Revoke and confirm calls fail,cleared | conditional | not-ready,Revocation test
+KS-4,Kill switch,System fails closed if the policy engine is down,Stop the engine; call a tool,cleared | conditional | not-ready,Test output
+KS-5,Kill switch,A named owner is on call for each agent,Check the owner list and rota,cleared | conditional | not-ready,Owner table
+KS-6,Kill switch,The kill switch is drilled on a schedule,Check last drill date,cleared | conditional | not-ready,Drill log

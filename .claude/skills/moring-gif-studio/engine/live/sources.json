@@ -1,0 +1,87 @@
+{
+ "okta": {
+  "src": "https://www.okta.com/content/dam/okta---digital/en_us/images/header/logos/okta.svg",
+  "file": "okta.svg",
+  "bytes": 7025
+ },
+ "opa": {
+  "src": "https://www.openpolicyagent.org/img/nav/logo.png",
+  "file": "opa.png",
+  "bytes": 38210
+ },
+ "splunk": {
+  "src": "https://www.splunk.com/content/dam/splunk2/images/icons/favicons/apple-touch-icon-144x144.png",
+  "file": "splunk.png",
+  "bytes": 19389
+ },
+ "salesforce": {
+  "src": "https://a.sfdcstatic.com/shared/images/c360-nav/salesforce-no-type-logo.svg",
+  "file": "salesforce.svg",
+  "bytes": 714
+ },
+ "servicenow": {
+  "src": "https://www.servicenow.com/content/dam/servicenow-assets/images/naas/servicenow-logo-icon.svg",
+  "file": "servicenow.svg",
+  "bytes": 583
+ },
+ "snowflake": {
+  "src": "https://www.snowflake.com/etc.clientlibs/snowflake-site/clientlibs/clientlib-react/resources/apple-touch-icon.png?v=3",
+  "file": "snowflake.png",
+  "bytes": 9325
+ },
+ "workday": {
+  "src": "https://www.workday.com/favicon.ico",
+  "file": "workday.png",
+  "bytes": 4286
+ },
+ "guidewire": {
+  "src": "https://www.guidewire.com/favicon/apple-touch-icon.png",
+  "file": "guidewire.png",
+  "bytes": 271
+ },
+ "aws": {
+  "src": "https://a0.awsstatic.com/libra-css/images/site/touch-icon-ipad-144-smile.png",
+  "file": "aws.png",
+  "bytes": 3061
+ },
+ "azure": {
+  "src": "https://azure.microsoft.com/favicon.ico?v2",
+  "file": "azure.png",
+  "bytes": 17174
+ },
+ "gcp": {
+  "src": "https://www.gstatic.com/cgc/super_cloud_gradient.png",
+  "file": "gcp.png",
+  "bytes": 9447
+ },
+ "github": {
+  "src": "https://github.githubassets.com/favicons/favicon.svg",
+  "file": "github.svg",
+  "bytes": 959
+ },
+ "anthropic": {
+  "src": "https://cdn.prod.website-files.com/67ce28cfec624e2b733f8a52/67d31dd7aa394792257596c5_webclip.png",
+  "file": "anthropic.png",
+  "bytes": 3175
+ },
+ "sap": {
+  "src": "https://www.sap.com/dam/application/shared/logos/sap-logo-svg.svg",
+  "file": "sap.svg",
+  "bytes": 1881
+ },
+ "datadog": {
+  "src": "https://corp.dd-static.net/img/dd_logo_n_70x75.png",
+  "file": "datadog.png",
+  "bytes": 2674
+ },
+ "microsoft": {
+  "src": "https://www.microsoft.com/favicon.ico?v2",
+  "file": "microsoft.png",
+  "bytes": 17174
+ },
+ "mcp": {
+  "src": "https://modelcontextprotocol.io/mintlify-assets/_mintlify/favicons/mcp/ebiVJzri-bsiCfVZ/_generated/favicon/apple-touch-icon.png",
+  "file": "mcp.png",
+  "bytes": 2869
+ }
+}

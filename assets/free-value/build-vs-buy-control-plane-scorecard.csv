@@ -1,0 +1,10 @@
+dimension,question_to_answer,build_it_yourself_looks_like,assemble_or_buy_looks_like,weight_1_to_5,your_build_score_0_to_2,your_buy_score_0_to_2,notes
+Time to first governed agent,How long until one agent runs under policy in production?,Months of design and engineering,Weeks if the engine and adapters exist,,,,
+Team,Who builds and runs it for years?,A dedicated team,A small owning team wiring it to your IAM and logging,,,,
+Policy engine,Who writes and maintains policy-as-code and tests?,You build the engine and the workflow around it,Engine exists; you write your policies,,,,
+Adapters,How many tool protocols must be covered (MCP / REST / gRPC)?,You build and maintain each adapter,Adapters exist; you test them against your tools,,,,
+Audit evidence,Who builds the signed record and retention for the rules you face?,You build signing and retention (EU AI Act logs: at least six months for deployers),Record format exists; you set retention,,,,
+Human approval,Who builds secure approval and scoped authority?,You build the approval workflow and reviewer tooling,Workflow exists; you define who approves what,,,,
+Keys and lock-in,Who holds the keys and can you leave?,You hold everything,You hold keys and export policies and records,,,,
+Surface area,How many agents and tools will it cover in 12 months?,Build wins when the surface is tiny and protocols few,Assemble wins once auditors ask for one trail across clouds,,,,
+How to use,"Weight each row 1 to 5. Score each side 0 (no) 1 (partly) 2 (yes) for how well it fits your case. Multiply by weight and total. Do this with security, risk and the business owner in the room.",,,,,,

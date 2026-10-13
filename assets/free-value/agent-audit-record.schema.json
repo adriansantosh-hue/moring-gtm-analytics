@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://moring.ai/free/agent-audit-record.schema.json",
+  "title": "Agent action audit record (draft v0.1)",
+  "description": "One record per agent action, allowed or denied. Free to use and adapt (licence proposed: Apache-2.0, owner to confirm). Shape is informed by EU AI Act Article 12 (automatic event logs over the lifetime of a high-risk system) and Article 26(6) (deployers keep logs at least six months). Check which rules apply to you and set retention to the longest.",
+  "type": "object",
+  "required": ["record_id", "trace_id", "timestamp", "principal", "action", "policy", "result", "signature"],
+  "properties": {
+    "record_id": { "type": "string", "description": "Unique id for this record." },
+    "trace_id": { "type": "string", "description": "Correlates prompt, decision, approval, tool call and result." },
+    "timestamp": { "type": "string", "format": "date-time" },
+    "principal": {
+      "type": "object",
+      "required": ["agent_id"],
+      "properties": {
+        "agent_id": { "type": "string", "description": "Workload identity of the agent." },
+        "on_behalf_of": { "type": "string", "description": "The human the agent acted for, if any." },
+        "agent_version": { "type": "string" }
+      }
+    },
+    "action": {
+      "type": "object",
+      "required": ["tool", "system"],
+      "properties": {
+        "tool": { "type": "string" },
+        "system": { "type": "string", "description": "System of record the call targets." },
+        "arguments_hash": { "type": "string", "description": "Hash of the arguments; store raw arguments separately under access control." },
+        "side_effect": { "enum": ["read", "write", "exec"] }
+      }
+    },
+    "policy": {
+      "type": "object",
+      "required": ["decision", "policy_version"],
+      "properties": {
+        "decision": { "enum": ["allow", "requires-approval", "deny"] },
+        "rule_id": { "type": "string" },
+        "policy_version": { "type": "string" },
+        "reason": { "type": "string" }
+      }
+    },
+    "approval": {
+      "type": "object",
+      "properties": {
+        "required": { "type": "boolean" },
+        "approver": { "type": "string" },
+        "decided_at": { "type": "string", "format": "date-time" },
+        "outcome": { "enum": ["approved", "rejected", "timed-out"] }
+      }
+    },
+    "result": {
+      "type": "object",
+      "required": ["status"],
+      "properties": {
+        "status": { "enum": ["succeeded", "failed", "blocked"] },
+        "error": { "type": "string" }
+      }
+    },
+    "duration_ms": { "type": "integer", "minimum": 0 },
+    "cost": {
+      "type": "object",
+      "properties": {
+        "tokens_in": { "type": "integer" },
+        "tokens_out": { "type": "integer" },
+        "usd": { "type": "number" }
+      }
+    },
+    "signature": {
+      "type": "object",
+      "required": ["alg", "key_id", "value"],
+      "properties": {
+        "alg": { "type": "string" },
+        "key_id": { "type": "string" },
+        "value": { "type": "string" },
+        "prev_record_hash": { "type": "string", "description": "Hash of the previous record, to make tampering visible." }
+      }
+    }
+  },
+  "examples": [
+    {
+      "record_id": "rec_000184",
+      "trace_id": "tr_9f3a21",
+      "timestamp": "2026-10-03T03:00:14Z",
+      "principal": { "agent_id": "claims-agent-07", "on_behalf_of": "j.alvarez", "agent_version": "1.4.2" },
+      "action": { "tool": "set_reserve", "system": "claims-core", "arguments_hash": "sha256:ab12...", "side_effect": "write" },
+      "policy": { "decision": "requires-approval", "rule_id": "write-needs-approver", "policy_version": "2026-10-01.3", "reason": "write action needs a named approver" },
+      "approval": { "required": true, "approver": "claims-lead.mpatel", "decided_at": "2026-10-03T03:00:41Z", "outcome": "approved" },
+      "result": { "status": "succeeded" },
+      "duration_ms": 412,
+      "cost": { "tokens_in": 2400, "tokens_out": 780, "usd": 0.004 },
+      "signature": { "alg": "ed25519", "key_id": "audit-key-2026-q4", "value": "base64...", "prev_record_hash": "sha256:77cd..." }
+    }
+  ]
+}
